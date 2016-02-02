@@ -111,7 +111,7 @@ apiRouter.post('/deal',function(req,res){
         to_insert.contracts = (req.body.contracts) ? req.body.contracts : null;
         to_insert.hcp = {
             east: (req.body.hcpEast) ? req.body.hcpEast : -40,
-            east: (req.body.hcpWest) ? req.body.hcpWest : -40,
+            west: (req.body.hcpWest) ? req.body.hcpWest : -40,
         };
         to_insert.best = (req.body.best) ? req.body.best : 0;
         to_insert.good = (req.body.good) ? req.body.good : 0;
@@ -146,6 +146,24 @@ apiRouter.post('/addtest',function(req,res){
             message: "Dodano dokument testowy",
         
     });
+});
+//list all deals
+apiRouter.get('/list',function(req,res){
+   deals = Deal.find({},function(err,deals){
+       list = Array();
+       for (i=0;i<deals.length;i++) {
+           console.log(deals[i]);
+           list.push({
+              deal_id: deals[i]._id,
+              difficulty: deals[i].best+deals[i].good+deals[i].fair,
+              hcp_total:deals[i].hcp.east+deals[i].hcp.west
+           });
+       }
+       res.json({
+           deals:list,
+           message:"obecnie posiadamy rozdań w naszej bazie: "+list.length
+       });
+   }) 
 });
 app.use('/api',apiRouter);
 
