@@ -3,10 +3,10 @@ var Schema = mongoose.Schema;
 
 var dealSchema = new Schema({
     hands: {
-            east: Array,
-            west: Array
+            east: {type: Array, required: true},
+            west: {type: Array, required: true},
         },
-    contracts: Object,
+    contracts: {type: Object, required: true},
     hcp: {
         east: Number,
         west: Number

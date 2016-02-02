@@ -41,7 +41,7 @@ apiRouter.use(function(req,res,next){
     console.log('New api request:'+req.method+' '+req.originalUrl+' from: '+req.ip);
     next();
 })
-
+//api homepage, mostly useless
 apiRouter.get('/',function(req,res){
      res.json({
               message: "Api strony z pojedynkami, witaj"      
@@ -49,18 +49,79 @@ apiRouter.get('/',function(req,res){
         );
     }
 );
-
+//grab all deals
 apiRouter.get('/all',function(req,res) {
     var allDeals=Deal.find({},function(err,dealsArr){
-        console.log(dealsArr);
+        if (err) return res.json({message : err});
         res.json({
         message: "Oto wszystkie nasze rozdania, warto było czekać?" ,
         deals: dealsArr
     });
-    })
-    
-    
+    })  
 });
+//single deal interface
+apiRouter.route('/deal/:deal_id')
+        // grab a single deal
+        .get(function(req,res){
+            Deal.findOne({_id: req.params.deal_id},function(err,deal){
+                if (err) return res.json({message : err});
+                res.json(deal);
+            });
+        })
+        // update deal data
+        .put(function(req,res){
+            Deal.findOne({_id: req.params.deal_id},function(err,deal){
+                if (err) return res.json({message : err});
+
+                deal.hands = {
+                    east: (req.body.handEast !== undefined) ? req.body.handEast : deal.hands.east, 
+                    west: (req.body.handWest !== undefined) ? req.body.handWest : deal.hands.west
+                };
+                deal.contracts = (req.body.contracts !== undefined) ? req.body.contracts : deal.contracts;
+                deal.hcp = {
+                    east: (req.body.hcpEast !== undefined) ? req.body.hcpEast : deal.hcp.east,
+                    west: (req.body.hcpWest !== undefined) ? req.body.hcpWest : deal.hcp.west
+                };
+                deal.best = (req.body.best !== undefined) ? req.body.best : deal.best;
+                deal.good = (req.body.good !== undefined) ? req.body.good : deal.good;
+                deal.fair = (req.body.fair !== undefined) ? req.body.fair : deal.good;
+            
+                deal.save(function(err){
+                    if (err) return res.json({message : err});
+                    res.json(deal);  
+                });
+                
+                
+                });
+        })
+        // delete a deal
+        .delete(function(req,res){
+            Deal.remove({_id: req.params.deal_id},function(err){
+                if (err) return res.json({message: err});
+                res.json({message: "deal "+req.params.deal_id+" deleted successfully"});
+            })
+        });
+//add a new deal
+apiRouter.post('/deal',function(req,res){
+    var to_insert = new Deal();
+        to_insert.hands = {
+            east: (req.body.handEast) ? req.body.handEast : null,
+            west: (req.body.handWest) ? req.body.handWest : null,
+        };
+        to_insert.contracts = (req.body.contracts) ? req.body.contracts : null;
+        to_insert.hcp = {
+            east: (req.body.hcpEast) ? req.body.hcpEast : -40,
+            east: (req.body.hcpWest) ? req.body.hcpWest : -40,
+        };
+        to_insert.best = (req.body.best) ? req.body.best : 0;
+        to_insert.good = (req.body.good) ? req.body.good : 0;
+        to_insert.fair = (req.body.fair) ? req.body.fair : 0;
+        to_insert.save(function(err){
+            if (err) return res.status(400).json({message: err});
+            res.redirect('/');
+        })
+});
+//add a test deal with 13 spades
 apiRouter.post('/addtest',function(req,res){
     var testDeal = new Deal();
         testDeal.hands = {
