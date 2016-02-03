@@ -86,7 +86,23 @@ apiRouter.route('/deal/:deal_id')
                 deal.best = (req.body.best !== undefined) ? req.body.best : deal.best;
                 deal.good = (req.body.good !== undefined) ? req.body.good : deal.good;
                 deal.fair = (req.body.fair !== undefined) ? req.body.fair : deal.good;
-            
+                deal.diff = (deal.best+deal.good+deal.fair)/3;
+                //east hand colors
+                deal.spadesEast = (req.body.handEast !== undefined) ? req.body.handEast[0].length : deal.spadesEast;
+                deal.heartsEast = (req.body.handEast !== undefined) ? req.body.handEast[1].length : deal.heartsEast;
+                deal.diamondsEast = (req.body.handEast !== undefined) ? req.body.handEast[2].length : deal.diamondsEast;
+                deal.clubsEast = (req.body.handEast !== undefined) ? req.body.handEast[3].length : deal.clubsEast;
+                //west hand colors
+                deal.spadesWest = (req.body.handWest !== undefined) ? req.body.handWest[0].length : deal.spadesWest;
+                deal.heartsWest = (req.body.handWest !== undefined) ? req.body.handWest[1].length : deal.heartsWest;
+                deal.diamondsWest = (req.body.handWest !== undefined) ? req.body.handWest[2].length : deal.diamondsWest;
+                deal.clubsWest = (req.body.handWest !== undefined) ? req.body.handWest[3].length : deal.clubsWest;
+                // total colors
+                deal.spadesTotal = deal.spadesWest+deal.spadesEast;
+                deal.heartsTotal = deal.heartsWest+deal.heartsEast;
+                deal.diamondsTotal = deal.diamondsWest+deal.diamondsEast;
+                deal.clubsTotal = deal.clubsWest+deal.clubsEast;
+                
                 deal.save(function(err){
                     if (err) return res.json({message : err});
                     res.json(deal);  
@@ -113,12 +129,30 @@ apiRouter.post('/deal',function(req,res){
         to_insert.hcpEast = (req.body.hcpEast) ? req.body.hcpEast : -40;
         to_insert.hcpWest = (req.body.hcpWest) ? req.body.hcpWest : -40;
         to_insert.hcpTotal = parseInt(to_insert.hcpEast)+parseInt(to_insert.hcpWest);
+        
         to_insert.best = (req.body.best) ? req.body.best : 0;
         to_insert.good = (req.body.good) ? req.body.good : 0;
         to_insert.fair = (req.body.fair) ? req.body.fair : 0;
+        to_insert.diff = (to_insert.best+to_insert.good+to_insert.fair)/3;
+        
+        to_insert.spadesEast = req.body.handEast[0].length;
+        to_insert.heartsEast = req.body.handEast[1].length;
+        to_insert.diamondsEast = req.body.handEast[2].length;
+        to_insert.clubsEast = req.body.handEast[3].length;
+        
+        to_insert.spadesWest = req.body.handWest[0].length;
+        to_insert.heartsWest = req.body.handWest[1].length;
+        to_insert.diamondsWest = req.body.handWest[2].length;
+        to_insert.clubsWest = req.body.handWest[3].length;
+        
+        to_insert.spadesTotal = to_insert.spadesEast+to_insert.spadesWest;
+        to_insert.heartsTotal = to_insert.heartsEast+to_insert.heartsWest;
+        to_insert.diamondsTotal = to_insert.diamondsEast+to_insert.diamondsWest;
+        to_insert.clubsTotal = to_insert.clubsEast+to_insert.clubsWest;
+        
         to_insert.save(function(err){
             if (err) return res.status(400).json({message: err});
-            res.redirect('/');
+            res.redirect('/api/list');
         })
 });
 //add a test deal with 13 spades
@@ -139,6 +173,21 @@ apiRouter.post('/addtest',function(req,res){
         testDeal.best = 1;
         testDeal.good = 1;
         testDeal.fair = 1;
+        testDeal.diff = 1;
+        testDeal.spadesEast = 13,
+        testDeal.heartsEast = 0,
+        testDeal.diamondsEast = 0,
+        testDeal.clubsEast = 0,
+        testDeal.spadesWest = 0,
+        testDeal.heartsWest = 5,
+        testDeal.diamondsWest = 4,
+        testDeal.clubsWest = 4,
+        testDeal.spadesTotal = 13,
+        testDeal.heartsTotal = 5,
+        testDeal.diamondsTotal = 4,
+        testDeal.clubsTotal = 4,
+        
+        
     console.log('do zapisu');    
     testDeal.save();
         res.json({
@@ -154,8 +203,8 @@ apiRouter.get('/list',function(req,res){
            console.log(deals[i]);
            list.push({
               deal_id: deals[i]._id,
-              difficulty: deals[i].best+deals[i].good+deals[i].fair,
-              hcp_total:deals[i].hcpTotal
+              difficulty: deals[i].diff,
+              hcp_total:deals[i].hcpTotal,
            });
        }
        res.json({
@@ -174,6 +223,19 @@ apiRouter.get('/deals/:qtity',function(req,res){
         best: {},
         good: {},
         fair: {},
+        diff: {},
+        spadesEast: {},
+        heartsEast: {},
+        diamondsEast: {},
+        clubsEast: {},
+        spadesWest: {},
+        heartsWest: {},
+        diamondsWest: {},
+        clubsWest: {},
+        spadesTotal: {},
+        heartsTotal: {},
+        diamondsTotal: {},
+        clubsTotal: {},
     };
     //grab params from request query and build a condition to filter db results by field
     var fieldLimit = function(maxP,minP) {
@@ -200,6 +262,24 @@ apiRouter.get('/deals/:qtity',function(req,res){
     queryFilter.good = fieldLimit(req.query.maxG,req.query.minG);
     // fair contract difficulty
     queryFilter.fair = fieldLimit(req.query.maxF,req.query.minF);
+    // general difficulty
+    queryFilter.diff = fieldLimit(req.query.maxD,req.query.minD);
+    // West colors
+    queryFilter.spadesWest = fieldLimit(req.query.maxSW,req.query.minSW);
+    queryFilter.heartsWest = fieldLimit(req.query.maxHW,req.query.minHW);
+    queryFilter.diamondsWest = fieldLimit(req.query.maxDW,req.query.minDW);
+    queryFilter.clubsWest = fieldLimit(req.query.maxCW,req.query.minCW);
+    // East colors
+    queryFilter.spadesEast = fieldLimit(req.query.maxSE,req.query.minSE);
+    queryFilter.heartsEast = fieldLimit(req.query.maxHE,req.query.minHE);
+    queryFilter.diamondsEast = fieldLimit(req.query.maxDE,req.query.minDE);
+    queryFilter.clubsEast = fieldLimit(req.query.maxCE,req.query.minCE);
+    // Total colors
+    queryFilter.spadesTotal = fieldLimit(req.query.maxST,req.query.minST);
+    queryFilter.heartsTotal = fieldLimit(req.query.maxHT,req.query.minHT);
+    queryFilter.diamondsTotal = fieldLimit(req.query.maxDT,req.query.minDT);
+    queryFilter.clubsTotal = fieldLimit(req.query.maxCT,req.query.minCT);
+    
     
    
     deals = Deal.find(queryFilter,function(err,deals){
