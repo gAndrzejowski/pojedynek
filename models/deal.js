@@ -7,10 +7,9 @@ var dealSchema = new Schema({
             west: {type: Array, required: true},
         },
     contracts: {type: Object, required: true},
-    hcp: {
-        east: Number,
-        west: Number
-        },
+    hcpEast: Number,
+    hcpWest: Number,
+    hcpTotal: Number,
     best: Number,
     good: Number,
     fair: Number

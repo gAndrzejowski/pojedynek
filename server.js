@@ -78,10 +78,11 @@ apiRouter.route('/deal/:deal_id')
                     west: (req.body.handWest !== undefined) ? req.body.handWest : deal.hands.west
                 };
                 deal.contracts = (req.body.contracts !== undefined) ? req.body.contracts : deal.contracts;
-                deal.hcp = {
-                    east: (req.body.hcpEast !== undefined) ? req.body.hcpEast : deal.hcp.east,
-                    west: (req.body.hcpWest !== undefined) ? req.body.hcpWest : deal.hcp.west
-                };
+                
+                deal.hcpEast = (req.body.hcpEast !== undefined) ? req.body.hcpEast : deal.hcpEast;
+                deal.hcpWest = (req.body.hcpWest !== undefined) ? req.body.hcpWest : deal.hcpWest;
+                deal.hcpTotal = deal.hcpEast+deal.hcpWest;
+                
                 deal.best = (req.body.best !== undefined) ? req.body.best : deal.best;
                 deal.good = (req.body.good !== undefined) ? req.body.good : deal.good;
                 deal.fair = (req.body.fair !== undefined) ? req.body.fair : deal.good;
@@ -109,10 +110,9 @@ apiRouter.post('/deal',function(req,res){
             west: (req.body.handWest) ? req.body.handWest : null,
         };
         to_insert.contracts = (req.body.contracts) ? req.body.contracts : null;
-        to_insert.hcp = {
-            east: (req.body.hcpEast) ? req.body.hcpEast : -40,
-            west: (req.body.hcpWest) ? req.body.hcpWest : -40,
-        };
+        to_insert.hcpEast = (req.body.hcpEast) ? req.body.hcpEast : -40;
+        to_insert.hcpWest = (req.body.hcpWest) ? req.body.hcpWest : -40;
+        to_insert.hcpTotal = parseInt(to_insert.hcpEast)+parseInt(to_insert.hcpWest);
         to_insert.best = (req.body.best) ? req.body.best : 0;
         to_insert.good = (req.body.good) ? req.body.good : 0;
         to_insert.fair = (req.body.fair) ? req.body.fair : 0;
@@ -133,10 +133,9 @@ apiRouter.post('/addtest',function(req,res){
             S6: 3
         };
                     
-        testDeal.hcp = {
-        east: 10,
-        west: 0
-        };
+        testDeal.hcpEast = 10;
+        testDeal.hcpWest = 0;
+        testDeal.hcpTotal = 10;
         testDeal.best = 1;
         testDeal.good = 1;
         testDeal.fair = 1;
@@ -156,7 +155,7 @@ apiRouter.get('/list',function(req,res){
            list.push({
               deal_id: deals[i]._id,
               difficulty: deals[i].best+deals[i].good+deals[i].fair,
-              hcp_total:deals[i].hcp.east+deals[i].hcp.west
+              hcp_total:deals[i].hcpTotal
            });
        }
        res.json({
@@ -165,6 +164,59 @@ apiRouter.get('/list',function(req,res){
        });
    }) 
 });
+//get specific deals
+apiRouter.get('/deals/:qtity',function(req,res){
+    
+    var queryFilter = {
+        hcpEast: {},
+        hcpWest: {},
+        hcpTotal: {},
+        best: {},
+        good: {},
+        fair: {},
+    };
+    //grab params from request query and build a condition to filter db results by field
+    var fieldLimit = function(maxP,minP) {
+        var field = {$exists: true};
+        if (maxP!==undefined && minP!==undefined) 
+            {
+            field = {$lte: parseInt(maxP), $gte: parseInt(minP)};
+            }
+        else {
+            if (maxP!==undefined) field = {$lte: parseInt(maxP)};
+            if (minP!==undefined) field = {$gte: parseInt(minP)};
+            } 
+        return field;
+    }
+    //hcpEast condition
+    queryFilter.hcpEast = fieldLimit(req.query.maxHE,req.query.minHE);
+    //hcpWest condition
+    queryFilter.hcpWest = fieldLimit(req.query.maxHW,req.query.minHW);
+    //total hcp condition
+    queryFilter.hcpTotal = fieldLimit(req.query.maxHT,req.query.minHT);
+    // best contract difficulty
+    queryFilter.best = fieldLimit(req.query.maxB,req.query.minB);
+    // good contract difficulty
+    queryFilter.good = fieldLimit(req.query.maxG,req.query.minG);
+    // fair contract difficulty
+    queryFilter.fair = fieldLimit(req.query.maxF,req.query.minF);
+    
+   
+    deals = Deal.find(queryFilter,function(err,deals){
+       var removeRandom = function(arrayToCut) {
+           var ind = Math.floor((Math.random()*arrayToCut.length))
+           return arrayToCut.splice(ind,1);
+       }
+       
+       var newDeals = Array();
+       for (i=0;i<req.params.qtity;i++) {
+           newDeals.push(removeRandom(deals)[0]);
+       }
+       res.json(newDeals);
+       
+    });
+});
+
 app.use('/api',apiRouter);
 
 // Start the goddamn server already
