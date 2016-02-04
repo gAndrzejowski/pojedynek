@@ -1,0 +1,2 @@
+# pojedynek
+Pojedynek licytacyjny npm
