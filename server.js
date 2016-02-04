@@ -5,12 +5,13 @@ var app = express();
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
+var path = require('path');
 var port = process.env.PORT || 1337;
 
 // Config
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
-
+app.use(express.static(__dirname + '/public'));
 app.use(function(req, res, next){
     res.setHeader('Access-Control-Allow-Origin','*');
     res.setHeader('Access-Control-Allow-Methods','GET, POST');
@@ -25,13 +26,6 @@ app.use(morgan('dev'));
 //Database
 mongoose.connect('mongodb://localhost/db');
 var Deal = require('./models/deal');
-
-//Homepage
-
-app.get('/',function(req,res) {
-    res.send('Witaj na stronie z pojedynkami licytacyjnymi');
-    }
-);
 
 //Api
 
@@ -298,7 +292,10 @@ apiRouter.get('/deals/:qtity',function(req,res){
 });
 
 app.use('/api',apiRouter);
-
+//Catchall 
+app.get('*',function(req,res){
+    res.sendFile(path.join(__dirname + '/public/app/views/index.html'));
+});
 // Start the goddamn server already
 app.listen(port)
 console.log('Strona stoi na porcie ' + port);

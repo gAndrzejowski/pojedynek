@@ -9,6 +9,7 @@
     "kerberos": "0.0.18",
     "mongodb": "^2.1.4",
     "mongoose": "",
-    "morgan": ""
+    "morgan": "",
+    "path": "^0.12.7"
   }
 }
