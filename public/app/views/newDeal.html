@@ -1,0 +1,56 @@
+<article id="addDeal" class="col-xs-9 col-md-6">
+<h1 class="h1">Wprowadź dane</h1>
+<form>
+<!-- W hand -->
+<p class="text-info">W</p>
+<div class="input-group">
+    <span id="spadesW" class="input-group-addon">&spades;</span>
+    <input class="form-control" aria-describedby="spadesW" ng-model="deal.hands.west.spades" />
+</div>
+<div class="input-group">
+    <span id="heartsW" class="input-group-addon">&hearts;</span>
+    <input class="form-control" aria-describedby="heartsW" ng-model="deal.hands.west.hearts" />
+</div>
+<div class="input-group">
+    <span id="diamsW" class="input-group-addon">&diams;</span>
+    <input class="form-control" aria-describedby="diamsW" ng-model="deal.hands.west.diams" />
+</div>
+<div class="input-group">
+    <span id="clubsW" class="input-group-addon">&clubs;</span>
+    <input class="form-control" aria-describedby="clubsW" ng-model="deal.hands.west.clubs" />
+</div>
+<!-- E hand -->
+<p class="text-info">E</p>
+<div class="input-group">
+    <span id="spadesE" class="input-group-addon">&spades;</span>
+    <input class="form-control" aria-describedby="spadesE" ng-model="deal.hands.east.spades" />
+</div>
+<div class="input-group">
+    <span id="heartsE" class="input-group-addon">&hearts;</span>
+    <input class="form-control" aria-describedby="heartsE" ng-model="deal.hands.east.hearts" />
+</div>
+<div class="input-group">
+    <span id="diamsE" class="input-group-addon">&diams;</span>
+    <input class="form-control" aria-describedby="diamsE" ng-model="deal.hands.east.diams" />
+</div>
+<div class="input-group">
+    <span id="clubsE" class="input-group-addon">&clubs;</span>
+    <input class="form-control" aria-describedby="clubsE" ng-model="deal.hands.east.clubs" />
+</div>
+</form>
+</article>
+<aside id="preview" class="col-xs-3 col-md-6">
+<h1 class="h1">Podgląd</h1>
+<!-- W hand preview -->
+<h3 class="h3">W</h3>
+<p><span class="suit">&spades;</span><span ng-bind="deal.hands.west.spades | uppercase">&spade;</span></p>
+<p><span class="suit">&hearts;</span><span ng-bind="deal.hands.west.hearts | uppercase">&spade;</span></p>
+<p><span class="suit">&diams;</span><span ng-bind="deal.hands.west.diams | uppercase">&spade;</span></p>
+<p><span class="suit">&clubs;</span><span ng-bind="deal.hands.west.clubs | uppercase">&spade;</span></p>
+<!-- E hand preview -->
+<h3 class="h3">E</h3>
+<p><span class="suit">&spades;</span><span ng-bind="deal.hands.east.spades | uppercase">&spade;</span></p>
+<p><span class="suit">&hearts;</span><span ng-bind="deal.hands.east.hearts | uppercase">&spade;</span></p>
+<p><span class="suit">&diams;</span><span ng-bind="deal.hands.east.diams | uppercase">&spade;</span></p>
+<p><span class="suit">&clubs;</span><span ng-bind="deal.hands.east.clubs | uppercase">&spade;</span></p>
+</aside>

@@ -11,7 +11,11 @@ angular.module('routerRoutes',['ngRoute'])
             controller : 'homeController',
             controllerAs : 'home' 
         })
-        
+        .when('/new',{
+            templateUrl : '/app/views/newDeal.html',
+            controller : 'dealController',
+            controllerAs : 'deal'
+        })
         .when('/deal/:deal_id',{
             templateUrl : '/app/views/deal.html',
             controller : 'dealController',

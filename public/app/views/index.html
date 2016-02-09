@@ -21,15 +21,13 @@
     
     </head>
     <body>
-        <div class="container">
-        <article ng-app="contestApp" ng-controller="mainController as main">
+        <div class="container" ng-app="contestApp" ng-controller="mainController as main">
         <h1 class="h1">
             {{main.presentMe}}
         </h1>
-        <div ng-view>
+        <div class="row" ng-view>
         
         </div>
-        </article>
         
         </div>
     </body>

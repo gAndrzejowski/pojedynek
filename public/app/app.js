@@ -30,8 +30,9 @@ angular.module('contestApp',['routerRoutes'])
             con.details = Err.data.message;        
         });
     con.parseContract = function(contract){
-        var level = contract.charAt(1);
         var strain = contract.charAt(0);
+        var level = contract.charAt(1);
+        var hand = contract.charAt(2);
         switch(strain) {
             case 'N': 
             strain = "NT";
@@ -52,6 +53,7 @@ angular.module('contestApp',['routerRoutes'])
             strain = "???";
         }
         var contract = level+strain;
+        if (hand) contract += hand;
         return $sce.trustAsHtml(contract);
     };
     con.parseDiff = function(diff) {
