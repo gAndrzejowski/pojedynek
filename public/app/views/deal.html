@@ -1,1 +1,54 @@
 <p class="text-centered">{{deal.presentMe}}</p>
+<h2 class="h2">Rozdanie nr {{deal.details._id}}</h2>
+<table class="table-bordered">
+<thead>
+    <th class="text-align-left">W</th>
+    <th class="text-align-right">E</th>
+</thead>
+<tr>
+<td>&spades;&nbsp;{{deal.details.hands.west[0]}}</td>
+<td>&spades;&nbsp;{{deal.details.hands.east[0]}}</td>
+</tr>
+<tr>
+<td>&hearts;&nbsp;{{deal.details.hands.west[1]}}</td>
+<td>&hearts;&nbsp;{{deal.details.hands.east[1]}}</td>
+</tr>
+<tr>
+<td>&diams;&nbsp;{{deal.details.hands.west[2]}}</td>
+<td>&diams;&nbsp;{{deal.details.hands.east[2]}}</td>
+</tr>
+<tr>
+<td>&clubs;&nbsp;{{deal.details.hands.west[3]}}</td>
+<td>&clubs;&nbsp;{{deal.details.hands.east[3]}}</td>
+</tr>
+</table>
+<table class="table-bordered">
+<thead>
+<th class="text-centered">Kontrakt</th>
+<th class="text-centered">Punktacja</th>
+</thead>
+<tr ng-repeat="(contract,points) in deal.details.contracts">
+<td ng-bind-html="deal.parseContract(contract)"></td>
+<td>{{points}}</td>
+</tr>
+</table>
+<table class="table-bordered">
+<thead><th class="text-info">Statystyki</th></thead>
+<tr>
+    <td>Punkty</td>
+    <td>E: {{deal.details.hcpEast}}</td>
+    <td>W: {{deal.details.hcpWest}}</td>
+    <td>Razem: {{deal.details.hcpTotal}}</td>
+</tr>
+<tr>
+    <td>Najlepszy</td>
+    <td>Dobry</td>
+    <td>Niezły</td>
+    <td>Razem</td>
+</tr><tr>
+    <td ng-bind-html="deal.parseDiff(deal.details.best)"></td>
+    <td ng-bind-html="deal.parseDiff(deal.details.good)"></td>
+    <td ng-bind-html="deal.parseDiff(deal.details.fair)"></td>
+    <td ng-bind-html="deal.parseDiff(deal.details.diff)"></td>
+</tr>
+</table>

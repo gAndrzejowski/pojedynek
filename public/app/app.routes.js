@@ -12,7 +12,7 @@ angular.module('routerRoutes',['ngRoute'])
             controllerAs : 'home' 
         })
         
-        .when('/deal',{
+        .when('/deal/:deal_id',{
             templateUrl : '/app/views/deal.html',
             controller : 'dealController',
             controllerAs : 'deal'

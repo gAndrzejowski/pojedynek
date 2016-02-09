@@ -1,1 +1,9 @@
 <p class="text-centered">{{list.presentMe}}</p>
+<div>
+    <table class="table-bordered">
+    <th>id</th>
+    <tr ng-repeat="deal in list.deals.deals"><td><a href="/deal/{{deal.deal_id}}">{{deal.deal_id}}</a></td></tr>
+    </table>
+    <div>{{list.deals.message}}</div>
+    
+</div>
