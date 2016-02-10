@@ -20,6 +20,7 @@ angular.module('contestApp',['routerRoutes'])
 .controller('dealController',function($routeParams,$http,$sce){
   
     var con = this;
+    
     $http({
         method: 'GET',
         url: '/api/deal/'+$routeParams.deal_id
@@ -60,6 +61,24 @@ angular.module('contestApp',['routerRoutes'])
         var stars = '';
         for (i=0;i<diff;i++) stars +="&#9733;"; //black star
         return $sce.trustAsHtml(stars);
+    }
+    con.setDiff = function(diffValue,contract) {
+        if (contract == 'best') con.best = diffValue;
+        if (contract == 'good') con.good = diffValue;
+        if (contract == 'fair') con.fair = diffValue;
+        con.checkDiff();
+    }
+    con.checkDiff = function() {
+        if (con.best<con.good || con.good<con.fair) 
+            {
+                con.diffMessage = 'Trudniej spełnić łatwiejsze wymagania? hmm...',
+                con.diffMsgClass = 'alert-warning'
+            }
+        else 
+            {
+                con.diffMessage = 'Z poziomem trudności wszystko OK',
+                con.diffMsgClass = 'alert-success'
+            }
     }
     con.presentMe = 'I take care of single deal actions';
 })

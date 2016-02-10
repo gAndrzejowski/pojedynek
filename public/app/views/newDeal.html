@@ -37,6 +37,31 @@
     <span id="clubsE" class="input-group-addon">&clubs;</span>
     <input class="form-control" aria-describedby="clubsE" ng-model="deal.hands.east.clubs" />
 </div>
+Najlepszy:
+<div>
+    <span class="btn" ng-click="deal.setDiff(1,'best')">&#9733;</span>
+    <span class="btn" ng-click="deal.setDiff(2,'best')">&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.setDiff(3,'best')">&#9733;&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.setDiff(4,'best')">&#9733;&#9733;&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.setDiff(5,'best')">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+</div>
+Dobry:
+<div>
+    <span class="btn" ng-click="deal.setDiff(1,'good')">&#9733;</span>
+    <span class="btn" ng-click="deal.setDiff(2,'good')">&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.setDiff(3,'good')">&#9733;&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.setDiff(4,'good')">&#9733;&#9733;&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.setDiff(5,'good')">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+</div>
+Niezły:
+<div>
+    <span class="btn" ng-click="deal.diff=deal.setDiff(1,'fair')">&#9733;</span>
+    <span class="btn" ng-click="deal.diff=deal.setDiff(2,'fair')">&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.diff=deal.setDiff(3,'fair')">&#9733;&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.diff=deal.setDiff(4,'fair')">&#9733;&#9733;&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.diff=deal.setDiff(5,'fair')">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+</div>
+
 </form>
 </article>
 <aside id="preview" class="col-xs-3 col-md-6">
@@ -53,4 +78,12 @@
 <p><span class="suit">&hearts;</span><span ng-bind="deal.hands.east.hearts | uppercase">&spade;</span></p>
 <p><span class="suit">&diams;</span><span ng-bind="deal.hands.east.diams | uppercase">&spade;</span></p>
 <p><span class="suit">&clubs;</span><span ng-bind="deal.hands.east.clubs | uppercase">&spade;</span></p>
+<!-- Difficulty -->
+<table class="table-bordered">
+<thead class="text-info">Poziom trudności</thead>
+<tr><td>Najlepszy</td><td ng-bind-html="deal.parseDiff(deal.best)"></td></tr>
+<tr><td>Dobry</td><td ng-bind-html="deal.parseDiff(deal.good)"></td></tr>
+<tr><td>Niezły</td><td ng-bind-html="deal.parseDiff(deal.fair)"></td></tr>
+</table>
+<p class="{{deal.diffMsgClass}}">{{deal.diffMessage}}</p>
 </aside>
