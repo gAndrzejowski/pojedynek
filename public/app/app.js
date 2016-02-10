@@ -66,7 +66,8 @@ angular.module('contestApp',['routerRoutes'])
         if (contract == 'best') con.best = diffValue;
         if (contract == 'good') con.good = diffValue;
         if (contract == 'fair') con.fair = diffValue;
-        con.checkDiff();
+        if (con.good>con.best) con.good=con.best;
+        if (con.fair>con.good) con.fair=con.good;
     }
     
     con.parseSuit = function(suitArray){

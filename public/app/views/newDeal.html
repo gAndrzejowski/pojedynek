@@ -80,10 +80,10 @@ Dobry:
 Niezły:
 <div>
     <span class="btn" ng-click="deal.diff=deal.setDiff(1,'fair')">&#9733;</span>
-    <span class="btn" ng-click="deal.diff=deal.setDiff(2,'fair')" ng-if="deal.good>=2 || !deal.good">&#9733;&#9733;</span>
-    <span class="btn" ng-click="deal.diff=deal.setDiff(3,'fair')" ng-if="deal.good>=3 || !deal.good">&#9733;&#9733;&#9733;</span>
-    <span class="btn" ng-click="deal.diff=deal.setDiff(4,'fair')" ng-if="deal.good>=4 || !deal.good">&#9733;&#9733;&#9733;&#9733;</span>
-    <span class="btn" ng-click="deal.diff=deal.setDiff(5,'fair')" ng-if="deal.good>=5 || !deal.good">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.diff=deal.setDiff(2,'fair')" ng-if="(deal.good>=2 || !deal.good) && (deal.best>=2 || !deal.best)">&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.diff=deal.setDiff(3,'fair')" ng-if="(deal.good>=3 || !deal.good) && (deal.best>=3 || !deal.best)">&#9733;&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.diff=deal.setDiff(4,'fair')" ng-if="(deal.good>=4 || !deal.good) && (deal.best>=4 || !deal.best)">&#9733;&#9733;&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.diff=deal.setDiff(5,'fair')" ng-if="(deal.good>=5 || !deal.good) && (deal.best>=5 || !deal.best)">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
 </div>
 
 </form>
