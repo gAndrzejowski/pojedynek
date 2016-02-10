@@ -68,18 +68,7 @@ angular.module('contestApp',['routerRoutes'])
         if (contract == 'fair') con.fair = diffValue;
         con.checkDiff();
     }
-    con.checkDiff = function() {
-        if (con.best<con.good || con.good<con.fair) 
-            {
-                con.diffMessage = 'Trudniej spełnić łatwiejsze wymagania? hmm...',
-                con.diffMsgClass = 'alert-warning'
-            }
-        else 
-            {
-                con.diffMessage = 'Z poziomem trudności wszystko OK',
-                con.diffMsgClass = 'alert-success'
-            }
-    }
+    
     con.parseSuit = function(suitArray){
         var suitString = '';
         for (i=0;i<suitArray.length;i++)

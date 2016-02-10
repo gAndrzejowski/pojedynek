@@ -72,18 +72,18 @@ Najlepszy:
 Dobry:
 <div>
     <span class="btn" ng-click="deal.setDiff(1,'good')">&#9733;</span>
-    <span class="btn" ng-click="deal.setDiff(2,'good')">&#9733;&#9733;</span>
-    <span class="btn" ng-click="deal.setDiff(3,'good')">&#9733;&#9733;&#9733;</span>
-    <span class="btn" ng-click="deal.setDiff(4,'good')">&#9733;&#9733;&#9733;&#9733;</span>
-    <span class="btn" ng-click="deal.setDiff(5,'good')">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.setDiff(2,'good')" ng-if="deal.best>=2 || !deal.best">&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.setDiff(3,'good')" ng-if="deal.best>=3 || !deal.best">&#9733;&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.setDiff(4,'good')" ng-if="deal.best>=4 || !deal.best">&#9733;&#9733;&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.setDiff(5,'good')" ng-if="deal.best>=5 || !deal.best">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
 </div>
 Niezły:
 <div>
     <span class="btn" ng-click="deal.diff=deal.setDiff(1,'fair')">&#9733;</span>
-    <span class="btn" ng-click="deal.diff=deal.setDiff(2,'fair')">&#9733;&#9733;</span>
-    <span class="btn" ng-click="deal.diff=deal.setDiff(3,'fair')">&#9733;&#9733;&#9733;</span>
-    <span class="btn" ng-click="deal.diff=deal.setDiff(4,'fair')">&#9733;&#9733;&#9733;&#9733;</span>
-    <span class="btn" ng-click="deal.diff=deal.setDiff(5,'fair')">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.diff=deal.setDiff(2,'fair')" ng-if="deal.good>=2 || !deal.good">&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.diff=deal.setDiff(3,'fair')" ng-if="deal.good>=3 || !deal.good">&#9733;&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.diff=deal.setDiff(4,'fair')" ng-if="deal.good>=4 || !deal.good">&#9733;&#9733;&#9733;&#9733;</span>
+    <span class="btn" ng-click="deal.diff=deal.setDiff(5,'fair')" ng-if="deal.good>=5 || !deal.good">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
 </div>
 
 </form>
@@ -115,5 +115,4 @@ Niezły:
 <tr><td>Dobry</td><td ng-bind-html="deal.parseDiff(deal.good)"></td></tr>
 <tr><td>Niezły</td><td ng-bind-html="deal.parseDiff(deal.fair)"></td></tr>
 </table>
-<p class="{{deal.diffMsgClass}}">{{deal.diffMessage}}</p>
 </aside>
