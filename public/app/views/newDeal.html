@@ -5,28 +5,28 @@
 <p class="text-info">W</p>
 <div>
 <span>&spades;</span>
-<label class="checkbox-inline" ng-repeat="(card,chosen) in deal.WSpadesOption track by $index" ng-if="!deal.ESpadesOption[card][0]">
+<label class="checkbox-inline" ng-repeat="(card,chosen) in deal.WSpadesOption track by $index" ng-if="!deal.ESpadesOption[card][0] && (deal.checkCards('W') || deal.WSpadesOption[card][0])">
 <input type="checkbox" ng-model="deal.WSpadesOption[card][0]" />
 <span class="card">{{chosen[1]}}</span>
 </label>
 </div>
 <div>
 <span>&hearts;</span>
-<label class="checkbox-inline" ng-repeat="(card,chosen) in deal.WHeartsOption track by $index" ng-if="!deal.EHeartsOption[card][0]">
+<label class="checkbox-inline" ng-repeat="(card,chosen) in deal.WHeartsOption track by $index" ng-if="!deal.EHeartsOption[card][0] && (deal.checkCards('W') || deal.WHeartsOption[card][0])">
 <input type="checkbox" ng-model="deal.WHeartsOption[card][0]" />
 <span class="card">{{chosen[1]}}</span>
 </label>
 </div>
 <div>
 <span>&diams;</span>
-<label class="checkbox-inline" ng-repeat="(card,chosen) in deal.WDiamsOption track by $index" ng-if="!deal.EDiamsOption[card][0]">
+<label class="checkbox-inline" ng-repeat="(card,chosen) in deal.WDiamsOption track by $index" ng-if="!deal.EDiamsOption[card][0] && (deal.checkCards('W') || deal.WDiamsOption[card][0])">
 <input type="checkbox" ng-model="deal.WDiamsOption[card][0]" />
 <span class="card">{{chosen[1]}}</span>
 </label>
 </div>
 <div>
 <span>&clubs;</span>
-<label class="checkbox-inline" ng-repeat="(card,chosen) in deal.WClubsOption track by $index" ng-if="!deal.EClubsOption[card][0]">
+<label class="checkbox-inline" ng-repeat="(card,chosen) in deal.WClubsOption track by $index" ng-if="!deal.EClubsOption[card][0] && (deal.checkCards('W') || deal.WClubsOption[card][0])">
 <input type="checkbox" ng-model="deal.WClubsOption[card][0]" />
 <span class="card">{{chosen[1]}}</span>
 </label>
@@ -35,28 +35,28 @@
 <p class="text-info">E</p>
 <div>
 <span>&spades;</span>
-<label class="checkbox-inline" ng-repeat="(card,chosen) in deal.ESpadesOption track by $index" ng-if="!deal.WSpadesOption[card][0]">
+<label class="checkbox-inline" ng-repeat="(card,chosen) in deal.ESpadesOption track by $index" ng-if="!deal.WSpadesOption[card][0] && (deal.checkCards('E') || deal.ESpadesOption[card][0])">
 <input type="checkbox" ng-model="deal.ESpadesOption[card][0]" />
 <span class="card">{{chosen[1]}}</span>
 </label>
 </div>
 <div>
 <span>&hearts;</span>
-<label class="checkbox-inline" ng-repeat="(card,chosen) in deal.EHeartsOption track by $index" ng-if="!deal.WHeartsOption[card][0]">
+<label class="checkbox-inline" ng-repeat="(card,chosen) in deal.EHeartsOption track by $index" ng-if="!deal.WHeartsOption[card][0] && (deal.checkCards('E') || deal.EHeartsOption[card][0])">
 <input type="checkbox" ng-model="deal.EHeartsOption[card][0]" />
 <span class="card">{{chosen[1]}}</span>
 </label>
 </div>
 <div>
 <span>&diams;</span>
-<label class="checkbox-inline" ng-repeat="(card,chosen) in deal.EDiamsOption track by $index" ng-if="!deal.WDiamsOption[card][0]">
+<label class="checkbox-inline" ng-repeat="(card,chosen) in deal.EDiamsOption track by $index" ng-if="!deal.WDiamsOption[card][0] && (deal.checkCards('E') || deal.EDiamsOption[card][0])">
 <input type="checkbox" ng-model="deal.EDiamsOption[card][0]" />
 <span class="card">{{chosen[1]}}</span>
 </label>
 </div>
 <div>
 <span>&clubs;</span>
-<label class="checkbox-inline" ng-repeat="(card,chosen) in deal.EClubsOption track by $index" ng-if="!deal.WClubsOption[card][0]">
+<label class="checkbox-inline" ng-repeat="(card,chosen) in deal.EClubsOption track by $index" ng-if="!deal.WClubsOption[card][0] && (deal.checkCards('E') || deal.EClubsOption[card][0])">
 <input type="checkbox" ng-model="deal.EClubsOption[card][0]" />
 <span class="card">{{chosen[1]}}</span>
 </label>
@@ -97,7 +97,6 @@ Niezły:
 <p><span class="suit">&hearts;</span>{{deal.parseSuit(deal.WHeartsOption)}}</p>
 <p><span class="suit">&diams;</span>{{deal.parseSuit(deal.WDiamsOption)}}</p>
 <p><span class="suit">&clubs;</span>{{deal.parseSuit(deal.WClubsOption)}}</p>
-<div ng-bind-html="deal.checkCards('W')"></div>
 </div>
 <!-- E hand preview -->
 <div class="col-xs-12 col-md-6">
@@ -107,7 +106,6 @@ Niezły:
 <p><span class="suit">&diams;</span>{{deal.parseSuit(deal.EDiamsOption)}}</p>
 <p><span class="suit">&clubs;</span>{{deal.parseSuit(deal.EClubsOption)}}</p>
 </div>
-<div ng-bind-html="deal.checkCards('E')"></div>
 <!-- Difficulty -->
 <table class="table-bordered">
 <thead class="text-info">Poziom trudności</thead>

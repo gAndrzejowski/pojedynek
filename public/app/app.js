@@ -79,14 +79,11 @@ angular.module('contestApp',['routerRoutes'])
         return suitString;
     }
     con.checkCards = function(hand) {
-        var cards, pClass;
-        if (hand=='W') cards = con.parseSuit(con.WSpadesOption).length+con.parseSuit(con.WHeartsOption).length+con.parseSuit(con.WDiamsOption).length+con.parseSuit(con.WClubsOption).length;
-        else cards = con.parseSuit(con.ESpadesOption).length+con.parseSuit(con.EHeartsOption).length+con.parseSuit(con.EDiamsOption).length+con.parseSuit(con.EClubsOption).length;    
-        if (cards<13) pClass = "text-warning";
-        else if (cards==13) pClass = "text-success";
-        else pClass = "text-danger";
-        var pMessage = '<p class="'+pClass+'">Liczba kart '+hand+': '+cards+'</p>';
-        return $sce.trustAsHtml(pMessage);
+        var cards;
+        if (hand=='W') cards = con.parseSuit(con.WSpadesOption).replace('10','T').length+con.parseSuit(con.WHeartsOption).replace('10','T').length+con.parseSuit(con.WDiamsOption).replace('10','T').length+con.parseSuit(con.WClubsOption).replace('10','T').length;
+        else cards = con.parseSuit(con.ESpadesOption).replace('10','T').length+con.parseSuit(con.EHeartsOption).replace('10','T').length+con.parseSuit(con.EDiamsOption).replace('10','T').length+con.parseSuit(con.EClubsOption).replace('10','T').length;    
+        if (cards<13) return true;
+        else return false;
     }
     con.WSpadesOption = 
              [
